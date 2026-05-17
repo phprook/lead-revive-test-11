@@ -14,22 +14,21 @@ PROJECT IDEA: Build a simple real estate lead follow-up landing page with a head
 
 CURRENT FEATURE:
 {
-  "id": "FEATURE_004",
-  "name": "Mobile responsiveness and visual polish",
-  "goal": "Improve the page so it looks professional and works well on mobile and desktop.",
+  "id": "FEATURE_005",
+  "name": "Future lead storage preparation",
+  "goal": "Prepare the code structure for possible future lead storage without actually adding a database integration.",
   "done_when": [
-    "Landing page is readable and usable on mobile screens",
-    "Form fields are easy to tap on mobile",
-    "CTA button is visually prominent",
-    "Spacing and typography are polished",
-    "Page has a trustworthy real estate landing page feel"
+    "Form submission logic is organized so a backend can be added later",
+    "Future lead fields are easy to map to a database",
+    "No Supabase credentials or production services are added",
+    "Code remains simple and understandable"
   ],
   "do_not_do": [
-    "Do not redesign into a multi-page site",
-    "Do not add animations unless very minimal",
-    "Do not add heavy UI libraries",
-    "Do not add unrelated sections",
-    "Do not change the core V1 purpose"
+    "Do not install or configure Supabase yet",
+    "Do not create database tables",
+    "Do not add API routes unless explicitly approved",
+    "Do not add authentication",
+    "Do not build a CRM or admin dashboard"
   ],
   "status": "pending"
 }
@@ -116,7 +115,7 @@ FULL ROADMAP:
       "Do not add unrelated sections",
       "Do not change the core V1 purpose"
     ],
-    "status": "pending"
+    "status": "completed"
   },
   {
     "id": "FEATURE_005",

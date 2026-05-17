@@ -1,40 +1,51 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-
-type FieldErrors = {
-  fullName?: string;
-  contact?: string;
-};
+import {
+  LEAD_INTEREST_OPTIONS,
+  buildLead,
+  submitLead,
+  validateLeadInput,
+  type LeadFieldErrors,
+  type LeadFormInput,
+} from "@/lib/leads";
 
 export default function LeadForm() {
-  const [errors, setErrors] = useState<FieldErrors>({});
+  const [errors, setErrors] = useState<LeadFieldErrors>({});
+  const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    const fullName = String(formData.get("fullName") ?? "").trim();
-    const email = String(formData.get("email") ?? "").trim();
-    const phone = String(formData.get("phone") ?? "").trim();
+    const input: LeadFormInput = {
+      fullName: String(formData.get("fullName") ?? ""),
+      email: String(formData.get("email") ?? ""),
+      phone: String(formData.get("phone") ?? ""),
+      interest: String(formData.get("interest") ?? ""),
+      message: String(formData.get("message") ?? ""),
+    };
 
-    const nextErrors: FieldErrors = {};
-    if (!fullName) {
-      nextErrors.fullName = "Please enter your full name.";
-    }
-    if (!email && !phone) {
-      nextErrors.contact =
-        "Please provide an email or phone number so we can reach you.";
-    }
-
+    const nextErrors = validateLeadInput(input);
     if (Object.keys(nextErrors).length > 0) {
       setErrors(nextErrors);
       return;
     }
 
     setErrors({});
-    setSubmitted(true);
+    setSubmitError(null);
+    setSubmitting(true);
+
+    const result = await submitLead(buildLead(input));
+
+    setSubmitting(false);
+    if (result.ok) {
+      setSubmitted(true);
+    } else {
+      setSubmitError(result.error);
+    }
   }
 
   if (submitted) {
@@ -188,10 +199,11 @@ export default function LeadForm() {
                 "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20' stroke='%2364748b' stroke-width='1.75'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='m6 8 4 4 4-4'/%3E%3C/svg%3E\")",
             }}
           >
-            <option value="buying">Buying</option>
-            <option value="selling">Selling</option>
-            <option value="both">Both</option>
-            <option value="not-sure">Not sure</option>
+            {LEAD_INTEREST_OPTIONS.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -214,11 +226,21 @@ export default function LeadForm() {
           />
         </div>
 
+        {submitError && (
+          <p
+            role="alert"
+            className="text-sm text-red-600 dark:text-red-400"
+          >
+            {submitError}
+          </p>
+        )}
+
         <button
           type="submit"
-          className="mt-3 inline-flex min-h-[52px] w-full items-center justify-center rounded-xl bg-blue-600 px-6 text-base font-semibold text-white shadow-sm shadow-blue-600/30 transition-colors hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 active:bg-blue-800 dark:bg-blue-500 dark:shadow-blue-500/20 dark:hover:bg-blue-400 dark:focus-visible:outline-blue-400"
+          disabled={submitting}
+          className="mt-3 inline-flex min-h-[52px] w-full items-center justify-center rounded-xl bg-blue-600 px-6 text-base font-semibold text-white shadow-sm shadow-blue-600/30 transition-colors hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 active:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-70 dark:bg-blue-500 dark:shadow-blue-500/20 dark:hover:bg-blue-400 dark:focus-visible:outline-blue-400"
         >
-          Request a callback
+          {submitting ? "Sending…" : "Request a callback"}
         </button>
       </div>
     </form>
