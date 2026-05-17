@@ -7,31 +7,31 @@ IMPORTANT RULES:
 - Do not build future roadmap items.
 - Do not add backend, database, auth, CRM, email, or paid services unless explicitly required by the current feature.
 - Keep the implementation simple.
-- After coding, run npm run build.
-- If tests exist, run them.
-- Commit changes to git.
+- After coding, write a short build report to .ai-build/last_build_report.md.
 
 PROJECT NAME: lead-revive-test-11
 PROJECT IDEA: Build a simple real estate lead follow-up landing page with a headline, short explanation, lead form, and clear call to action
 
 CURRENT FEATURE:
 {
-  "id": "FEATURE_001",
-  "name": "Basic landing page structure",
-  "goal": "Create the first public real estate lead follow-up landing page with a professional headline, short explanation, and clear call-to-action area.",
+  "id": "FEATURE_002",
+  "name": "Lead capture form UI",
+  "goal": "Add a simple lead form to collect basic contact information from interested real estate leads.",
   "done_when": [
-    "Homepage loads at the root route",
-    "Page includes a clear real estate follow-up headline",
-    "Page includes short supporting copy explaining why the visitor should respond",
-    "Page includes a visible call-to-action section",
-    "Layout is clean and readable on desktop"
+    "Form appears on the landing page",
+    "Form includes full name field",
+    "Form includes email field",
+    "Form includes phone number field",
+    "Form includes interest type selection with buying, selling, both, and not sure options",
+    "Form includes optional message field",
+    "Form includes a clear submit button"
   ],
   "do_not_do": [
-    "Do not build the lead form yet",
-    "Do not add database storage",
-    "Do not add login or user accounts",
-    "Do not add multiple pages",
-    "Do not integrate third-party services"
+    "Do not implement database saving",
+    "Do not implement email sending",
+    "Do not add advanced validation yet",
+    "Do not add CRM features",
+    "Do not add admin views"
   ],
   "status": "pending"
 }
@@ -56,7 +56,7 @@ FULL ROADMAP:
       "Do not add multiple pages",
       "Do not integrate third-party services"
     ],
-    "status": "pending"
+    "status": "completed"
   },
   {
     "id": "FEATURE_002",
@@ -140,10 +140,3 @@ FULL ROADMAP:
     "status": "pending"
   }
 ]
-
-When finished, create .ai-build/last_build_report.md with:
-- Summary
-- Files changed
-- Tests/build run
-- Result
-- Next recommendation

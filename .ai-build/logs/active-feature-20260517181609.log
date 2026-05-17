@@ -1,0 +1,8 @@
+Active feature log created: /home/ubuntu/ai-builds/lead-revive-test-11/.ai-build/logs/active-feature-20260517181609.log
+Project: lead-revive-test-11
+Feature: FEATURE_002 - Lead capture form UI
+
+=== RUNNING CLAUDE ===
+FEATURE_002 built. Added `src/app/components/LeadForm.tsx` (name, email, phone, interest select with the four options, optional message, submit button) and wired it into `src/app/page.tsx` under a small real-estate hero. `next build` passes. Report at `.ai-build/last_build_report.md`.
+
+Note: I found that `page.tsx` was still the create-next-app template even though FEATURE_001 was marked complete, so I replaced it with a minimal landing layout so the form has a coherent context to live in. Validation and submit handling are deliberately out of scope (FEATURE_003).
