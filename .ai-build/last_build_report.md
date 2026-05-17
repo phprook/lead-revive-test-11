@@ -4,39 +4,46 @@
 **Result:** Build succeeded (`next build`, Next.js 16.2.6)
 
 ## Summary
-Wired the existing lead form to Supabase. Valid submissions now insert
-into `public.leads` using the anon key from `.env.local`. Client-side
-validation and the existing success state are preserved.
+Verification pass. The lead form was already wired to Supabase in prior
+commits (`Connect lead form to Supabase`, `Apply Supabase leads
+migration`); this run confirmed every constraint in the task is satisfied
+and that `npm run build` still passes. No code changes were needed.
 
-## Changes
-- **Installed** `@supabase/supabase-js`.
-- **Added** `src/lib/supabaseClient.ts` — small lazy singleton browser
-  client using `NEXT_PUBLIC_SUPABASE_URL` and
-  `NEXT_PUBLIC_SUPABASE_ANON_KEY`. Service role key is never referenced.
-- **Updated** `src/lib/leads.ts` `submitLead()` to insert into
-  `public.leads` using the existing columns: `full_name`, `email`,
-  `phone`, `interest_type`, `message`, `source`. `source` is set to
-  `"website"`. The domain value `"not-sure"` is mapped to the DB-allowed
-  `"not_sure"` to satisfy the existing check constraint.
-- On Supabase error or thrown exception, returns a clear, non-technical
+## Wiring in place
+- `src/lib/supabaseClient.ts` — small lazy singleton browser client using
+  `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` from
+  `.env.local`. The service role key is never referenced from frontend
+  code.
+- `src/lib/leads.ts` `submitLead()` inserts into `public.leads` using the
+  existing columns only: `full_name`, `email`, `phone`, `interest_type`,
+  `message`, `source` (= `"website"`). The UI value `"not-sure"` is
+  mapped to the DB-allowed `"not_sure"` to satisfy the existing CHECK
+  constraint.
+- `src/app/components/LeadForm.tsx` keeps `validateLeadInput` and all
+  field-level errors; on success it renders the existing success state;
+  on Supabase error or thrown exception it shows the clear, non-technical
   message: *"Sorry, we couldn't send your details right now. Please try
-  again in a moment."* The form's existing `submitError` alert path
-  renders it.
-
-## Preserved
-- `validateLeadInput` and all field-level errors.
-- The existing success state in `LeadForm.tsx` (no UI edits required).
-- No new tables, no auth, no admin dashboard, no secrets committed.
+  again in a moment."*
+- `@supabase/supabase-js@^2.105.4` already present in `package.json`.
+- `supabase/migrations/20260517212842_create_leads_table.sql` creates
+  `public.leads`, enables RLS, and grants an `INSERT` policy to `anon`.
 
 ## Build output
 ```
-✓ Compiled successfully in 8.5s
-  Finished TypeScript in 6.5s
+✓ Compiled successfully in 8.2s
+  Finished TypeScript in 5.8s
 ✓ Generating static pages (4/4)
 Route (app)
 ┌ ○ /
 └ ○ /_not-found
 ```
+
+## Preserved / non-actions
+- Client-side validation and the existing success state untouched.
+- No authentication added.
+- No admin dashboard added.
+- No new tables added.
+- No secrets exposed; only the public anon key is used client-side.
 
 ## Notes
 - Next.js warned about a sibling `package-lock.json` at
