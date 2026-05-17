@@ -5,9 +5,9 @@
 
 ## Summary
 Verification pass. The lead form was already wired to Supabase in prior
-commits (`Connect lead form to Supabase`, `Apply Supabase leads
-migration`). This run reconfirmed every task constraint is satisfied and
-that `npm run build` still passes cleanly. No code changes were needed.
+commits (`Connect lead form to Supabase`). This run reconfirmed every
+task constraint is satisfied and that `npm run build` still passes
+cleanly. No code changes were needed.
 
 ## Wiring in place
 - `src/lib/supabaseClient.ts` — small lazy singleton browser client using
@@ -21,18 +21,18 @@ that `npm run build` still passes cleanly. No code changes were needed.
   constraint.
 - `src/app/components/LeadForm.tsx` keeps `validateLeadInput` and all
   field-level errors; on success it renders the existing success state;
-  on Supabase error or thrown exception it shows the clear, non-technical
-  message: *"Sorry, we couldn't send your details right now. Please try
-  again in a moment."*
+  on Supabase error or thrown exception it shows the clear,
+  non-technical message: *"Sorry, we couldn't send your details right
+  now. Please try again in a moment."*
 - `@supabase/supabase-js@^2.105.4` already present in `package.json`.
 - `supabase/migrations/20260517212842_create_leads_table.sql` creates
   `public.leads`, enables RLS, and grants an `INSERT` policy to `anon`.
 
 ## Build output
 ```
-✓ Compiled successfully in 8.4s
-  Finished TypeScript in 6.3s
-✓ Generating static pages (4/4) in 278ms
+✓ Compiled successfully in 8.2s
+  Finished TypeScript in 6.2s
+✓ Generating static pages (4/4) in 275ms
 Route (app)
 ┌ ○ /
 └ ○ /_not-found
