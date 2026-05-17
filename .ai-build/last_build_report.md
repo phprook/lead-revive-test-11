@@ -30,9 +30,9 @@ that `npm run build` still passes cleanly. No code changes were needed.
 
 ## Build output
 ```
-✓ Compiled successfully in 8.3s
-  Finished TypeScript in 6.0s
-✓ Generating static pages (4/4) in 223ms
+✓ Compiled successfully in 8.4s
+  Finished TypeScript in 6.3s
+✓ Generating static pages (4/4) in 278ms
 Route (app)
 ┌ ○ /
 └ ○ /_not-found
