@@ -14,22 +14,22 @@ PROJECT IDEA: Build a simple real estate lead follow-up landing page with a head
 
 CURRENT FEATURE:
 {
-  "id": "FEATURE_003",
-  "name": "Form validation and success message",
-  "goal": "Make the lead form usable by validating required fields and showing a clear confirmation after submission.",
+  "id": "FEATURE_004",
+  "name": "Mobile responsiveness and visual polish",
+  "goal": "Improve the page so it looks professional and works well on mobile and desktop.",
   "done_when": [
-    "Full name is required",
-    "At least one contact method, email or phone, is required",
-    "User sees a helpful error message when required information is missing",
-    "Successful submission shows a thank-you or confirmation message",
-    "Form does not attempt to save to a database"
+    "Landing page is readable and usable on mobile screens",
+    "Form fields are easy to tap on mobile",
+    "CTA button is visually prominent",
+    "Spacing and typography are polished",
+    "Page has a trustworthy real estate landing page feel"
   ],
   "do_not_do": [
-    "Do not add Supabase",
-    "Do not send emails",
-    "Do not add server-side submission logic unless approved",
-    "Do not create a lead dashboard",
-    "Do not add analytics tracking"
+    "Do not redesign into a multi-page site",
+    "Do not add animations unless very minimal",
+    "Do not add heavy UI libraries",
+    "Do not add unrelated sections",
+    "Do not change the core V1 purpose"
   ],
   "status": "pending"
 }
@@ -96,7 +96,7 @@ FULL ROADMAP:
       "Do not create a lead dashboard",
       "Do not add analytics tracking"
     ],
-    "status": "pending"
+    "status": "completed"
   },
   {
     "id": "FEATURE_004",

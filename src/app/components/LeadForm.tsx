@@ -41,12 +41,29 @@ export default function LeadForm() {
     return (
       <div
         role="status"
-        className="w-full max-w-xl rounded-2xl border border-zinc-200 bg-white p-8 text-center shadow-sm dark:border-zinc-800 dark:bg-zinc-950"
+        className="w-full max-w-xl rounded-2xl border border-slate-200 bg-white p-7 text-center shadow-sm sm:p-10 dark:border-zinc-800 dark:bg-zinc-950"
       >
-        <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50">
+        <div
+          aria-hidden="true"
+          className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            className="h-6 w-6"
+          >
+            <path
+              fillRule="evenodd"
+              d="M16.704 5.296a1 1 0 0 1 0 1.408l-7.5 7.5a1 1 0 0 1-1.408 0l-3.5-3.5a1 1 0 1 1 1.408-1.408L8.5 12.092l6.796-6.796a1 1 0 0 1 1.408 0Z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </div>
+        <h2 className="mt-4 text-xl font-semibold text-slate-900 sm:text-2xl dark:text-zinc-50">
           Thanks — we&apos;ll be in touch!
         </h2>
-        <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="mt-2 text-sm leading-6 text-slate-600 sm:text-base dark:text-zinc-400">
           We received your details and a member of our team will reach out
           shortly.
         </p>
@@ -55,36 +72,38 @@ export default function LeadForm() {
   }
 
   const inputBase =
-    "h-11 rounded-lg border bg-white px-3 text-sm text-zinc-900 outline-none transition-colors placeholder:text-zinc-400 focus:border-zinc-900 dark:bg-zinc-900 dark:text-zinc-50 dark:focus:border-zinc-300";
-  const inputDefault = "border-zinc-300 dark:border-zinc-700";
-  const inputError = "border-red-500 dark:border-red-500";
+    "h-12 w-full rounded-lg border bg-white px-3.5 text-base text-slate-900 outline-none transition-colors placeholder:text-slate-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 dark:bg-zinc-900 dark:text-zinc-50 dark:placeholder:text-zinc-500 dark:focus:border-blue-400 dark:focus:ring-blue-400/20";
+  const inputDefault = "border-slate-300 dark:border-zinc-700";
+  const inputError =
+    "border-red-500 focus:border-red-500 focus:ring-red-500/20 dark:border-red-500 dark:focus:border-red-400 dark:focus:ring-red-400/20";
 
   return (
     <form
       noValidate
       onSubmit={handleSubmit}
-      className="w-full max-w-xl rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-950"
+      className="w-full max-w-xl rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8 dark:border-zinc-800 dark:bg-zinc-950"
     >
-      <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50">
+      <h2 className="text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl dark:text-zinc-50">
         Get in touch
       </h2>
-      <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+      <p className="mt-1.5 text-sm leading-6 text-slate-600 dark:text-zinc-400">
         Tell us a bit about you and we&apos;ll reach out shortly.
       </p>
 
-      <div className="mt-6 grid grid-cols-1 gap-5">
+      <div className="mt-6 grid grid-cols-1 gap-4 sm:gap-5">
         <div className="flex flex-col gap-1.5">
           <label
             htmlFor="fullName"
-            className="text-sm font-medium text-zinc-800 dark:text-zinc-200"
+            className="text-sm font-medium text-slate-800 dark:text-zinc-200"
           >
-            Full name
+            Full name <span className="text-red-600">*</span>
           </label>
           <input
             id="fullName"
             name="fullName"
             type="text"
             autoComplete="name"
+            inputMode="text"
             placeholder="Jane Doe"
             aria-invalid={errors.fullName ? true : undefined}
             aria-describedby={errors.fullName ? "fullName-error" : undefined}
@@ -103,7 +122,7 @@ export default function LeadForm() {
         <div className="flex flex-col gap-1.5">
           <label
             htmlFor="email"
-            className="text-sm font-medium text-zinc-800 dark:text-zinc-200"
+            className="text-sm font-medium text-slate-800 dark:text-zinc-200"
           >
             Email
           </label>
@@ -112,6 +131,7 @@ export default function LeadForm() {
             name="email"
             type="email"
             autoComplete="email"
+            inputMode="email"
             placeholder="jane@example.com"
             aria-invalid={errors.contact ? true : undefined}
             className={`${inputBase} ${errors.contact ? inputError : inputDefault}`}
@@ -121,7 +141,7 @@ export default function LeadForm() {
         <div className="flex flex-col gap-1.5">
           <label
             htmlFor="phone"
-            className="text-sm font-medium text-zinc-800 dark:text-zinc-200"
+            className="text-sm font-medium text-slate-800 dark:text-zinc-200"
           >
             Phone number
           </label>
@@ -130,6 +150,7 @@ export default function LeadForm() {
             name="phone"
             type="tel"
             autoComplete="tel"
+            inputMode="tel"
             placeholder="(555) 555-5555"
             aria-invalid={errors.contact ? true : undefined}
             aria-describedby={errors.contact ? "contact-error" : undefined}
@@ -143,12 +164,17 @@ export default function LeadForm() {
               {errors.contact}
             </p>
           )}
+          {!errors.contact && (
+            <p className="text-xs text-slate-500 dark:text-zinc-500">
+              Email or phone — whichever you prefer.
+            </p>
+          )}
         </div>
 
         <div className="flex flex-col gap-1.5">
           <label
             htmlFor="interest"
-            className="text-sm font-medium text-zinc-800 dark:text-zinc-200"
+            className="text-sm font-medium text-slate-800 dark:text-zinc-200"
           >
             I&apos;m interested in
           </label>
@@ -156,7 +182,11 @@ export default function LeadForm() {
             id="interest"
             name="interest"
             defaultValue="buying"
-            className={`${inputBase} ${inputDefault}`}
+            className={`${inputBase} ${inputDefault} appearance-none bg-[length:1.25rem] bg-[right_0.75rem_center] bg-no-repeat pr-10`}
+            style={{
+              backgroundImage:
+                "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20' stroke='%2364748b' stroke-width='1.75'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='m6 8 4 4 4-4'/%3E%3C/svg%3E\")",
+            }}
           >
             <option value="buying">Buying</option>
             <option value="selling">Selling</option>
@@ -168,23 +198,25 @@ export default function LeadForm() {
         <div className="flex flex-col gap-1.5">
           <label
             htmlFor="message"
-            className="text-sm font-medium text-zinc-800 dark:text-zinc-200"
+            className="text-sm font-medium text-slate-800 dark:text-zinc-200"
           >
             Message{" "}
-            <span className="font-normal text-zinc-500">(optional)</span>
+            <span className="font-normal text-slate-500 dark:text-zinc-500">
+              (optional)
+            </span>
           </label>
           <textarea
             id="message"
             name="message"
             rows={4}
             placeholder="Anything we should know?"
-            className="rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 outline-none transition-colors placeholder:text-zinc-400 focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50 dark:focus:border-zinc-300"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-base text-slate-900 outline-none transition-colors placeholder:text-slate-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50 dark:placeholder:text-zinc-500 dark:focus:border-blue-400 dark:focus:ring-blue-400/20"
           />
         </div>
 
         <button
           type="submit"
-          className="mt-2 inline-flex h-12 items-center justify-center rounded-full bg-zinc-900 px-6 text-base font-medium text-white transition-colors hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
+          className="mt-3 inline-flex min-h-[52px] w-full items-center justify-center rounded-xl bg-blue-600 px-6 text-base font-semibold text-white shadow-sm shadow-blue-600/30 transition-colors hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 active:bg-blue-800 dark:bg-blue-500 dark:shadow-blue-500/20 dark:hover:bg-blue-400 dark:focus-visible:outline-blue-400"
         >
           Request a callback
         </button>
