@@ -14,24 +14,22 @@ PROJECT IDEA: Build a simple real estate lead follow-up landing page with a head
 
 CURRENT FEATURE:
 {
-  "id": "FEATURE_002",
-  "name": "Lead capture form UI",
-  "goal": "Add a simple lead form to collect basic contact information from interested real estate leads.",
+  "id": "FEATURE_003",
+  "name": "Form validation and success message",
+  "goal": "Make the lead form usable by validating required fields and showing a clear confirmation after submission.",
   "done_when": [
-    "Form appears on the landing page",
-    "Form includes full name field",
-    "Form includes email field",
-    "Form includes phone number field",
-    "Form includes interest type selection with buying, selling, both, and not sure options",
-    "Form includes optional message field",
-    "Form includes a clear submit button"
+    "Full name is required",
+    "At least one contact method, email or phone, is required",
+    "User sees a helpful error message when required information is missing",
+    "Successful submission shows a thank-you or confirmation message",
+    "Form does not attempt to save to a database"
   ],
   "do_not_do": [
-    "Do not implement database saving",
-    "Do not implement email sending",
-    "Do not add advanced validation yet",
-    "Do not add CRM features",
-    "Do not add admin views"
+    "Do not add Supabase",
+    "Do not send emails",
+    "Do not add server-side submission logic unless approved",
+    "Do not create a lead dashboard",
+    "Do not add analytics tracking"
   ],
   "status": "pending"
 }
@@ -78,7 +76,7 @@ FULL ROADMAP:
       "Do not add CRM features",
       "Do not add admin views"
     ],
-    "status": "pending"
+    "status": "completed"
   },
   {
     "id": "FEATURE_003",

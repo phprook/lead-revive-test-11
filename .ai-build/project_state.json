@@ -1,8 +1,8 @@
 {
   "projectName": "lead-revive-test-11",
   "projectIdea": "Build a simple real estate lead follow-up landing page with a headline, short explanation, lead form, and clear call to action",
-  "status": "ready_for_FEATURE_002",
-  "currentFeatureIndex": 1,
+  "status": "ready_for_FEATURE_003",
+  "currentFeatureIndex": 2,
   "features": [
     {
       "id": "FEATURE_001",
@@ -44,7 +44,7 @@
         "Do not add CRM features",
         "Do not add admin views"
       ],
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": "FEATURE_003",
@@ -107,7 +107,7 @@
     }
   ],
   "approvedPlan": true,
-  "lastCommand": "/nextactivefeature",
+  "lastCommand": "/buildprojectactive:nextfeature",
   "lastQuestion": null,
   "lastAnswer": null,
   "lastChangeRequest": null,
@@ -116,12 +116,11 @@
   "lastDesignChecklistFile": null,
   "lastClaudeReviewFile": null,
   "lastFinalDecisionFile": null,
-  "updatedAt": "2026-05-17T18:15:58.063Z",
+  "updatedAt": "2026-05-17T18:36:55.769Z",
   "localPath": "/home/ubuntu/ai-builds/lead-revive-test-11",
   "lastActiveBuild": {
-    "feature": "FEATURE_001",
-    "featureName": "Basic landing page structure",
-    "exitCode": 0,
-    "completedAt": "2026-05-17T18:09:06.609Z"
+    "feature": "FEATURE_002",
+    "featureName": "Lead capture form UI",
+    "completedAt": "2026-05-17T18:19:34.029Z"
   }
 }

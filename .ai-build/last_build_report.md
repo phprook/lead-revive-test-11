@@ -1,38 +1,42 @@
-# Build Report — FEATURE_002: Lead capture form UI
+# Build Report — FEATURE_003: Form validation and success message
 
 ## Status
-Built successfully. `next build` compiles and renders `/` as a static page.
+Built successfully. `npx tsc --noEmit` is clean and `next build` compiles
+`/` as a static page.
 
 ## Changes
-- Added `src/app/components/LeadForm.tsx` — server-rendered form component with:
-  - Full name (text)
-  - Email (email)
-  - Phone number (tel)
-  - Interest type (select: Buying, Selling, Both, Not sure)
-  - Message (textarea, optional)
-  - Submit button labeled "Request a callback"
-- Updated `src/app/page.tsx` — replaced the leftover Next.js starter content with a
-  real estate landing layout (badge, headline, supporting copy) and embedded `<LeadForm />`
-  beneath it. Found the prior page was still the template boilerplate even though
-  FEATURE_001 was marked complete, so the landing section was added as minimal
-  scaffolding required for the form to appear in context.
+- `src/app/components/LeadForm.tsx`
+  - Converted to a Client Component (`"use client"`) so it can manage
+    validation and submission state with `useState`.
+  - Added an `onSubmit` handler that:
+    - Reads `fullName`, `email`, and `phone` from `FormData`.
+    - Requires `fullName`.
+    - Requires at least one of `email` or `phone`.
+    - Shows inline error messages with red borders and ARIA wiring
+      (`aria-invalid`, `aria-describedby`).
+    - Calls `event.preventDefault()` — no network call, no server action.
+  - On a valid submission, swaps the form for a thank-you confirmation
+    panel (`role="status"`).
+  - Added `noValidate` so the custom validation messages are shown
+    instead of the browser's native popovers.
 
 ## Done-when checks
-- Form appears on the landing page — yes (rendered below the hero section on `/`).
-- Full name field — yes.
-- Email field — yes.
-- Phone number field — yes.
-- Interest type with buying / selling / both / not sure — yes (`<select>`).
-- Optional message field — yes (labeled "(optional)").
-- Clear submit button — yes ("Request a callback").
+- Full name is required — yes.
+- At least one contact method (email or phone) is required — yes.
+- User sees a helpful error message when required information is missing — yes
+  (per-field inline messages with accessible wiring).
+- Successful submission shows a thank-you / confirmation message — yes.
+- Form does not attempt to save to a database — yes; no fetch, no server
+  action, no external calls.
 
 ## Out of scope (intentionally skipped, per `do_not_do`)
-- No validation logic.
-- No submit handler, server action, or API route.
-- No database, email, CRM, auth, or analytics integration.
+- No Supabase or any database.
+- No email sending.
+- No server-side submission logic (no API route, no server action).
+- No lead dashboard.
+- No analytics tracking.
 
 ## Notes
-- Form is plain HTML in a server component; no client-side state needed for this
-  feature. Validation and success-state handling are slated for FEATURE_003.
-- Pressing submit currently performs the browser's default form submission (GET to
-  the same URL). FEATURE_003 will replace this with a proper handler.
+- No new dependencies were added.
+- The interest `<select>` retains its default value of "buying"; the
+  optional message textarea is unchanged.
