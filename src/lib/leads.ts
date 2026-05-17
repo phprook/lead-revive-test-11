@@ -1,8 +1,6 @@
 // Domain model and submission boundary for real-estate leads.
-//
-// The fields on `Lead` are intentionally chosen to map 1:1 to a future
-// database row (e.g. a `leads` table in Supabase / Postgres). When a
-// backend is added, only `submitLead` below should need to change.
+
+import { getSupabaseClient } from "./supabaseClient";
 
 export type LeadInterest = "buying" | "selling" | "both" | "not-sure";
 
@@ -73,12 +71,42 @@ export type SubmitLeadResult =
   | { ok: true }
   | { ok: false; error: string };
 
-// Single boundary where a real backend would be plugged in (API route,
-// Supabase client, CRM webhook, etc.). Kept as a no-op for now so the
-// rest of the app already speaks the future contract.
+function toInterestType(interest: LeadInterest): string {
+  return interest === "not-sure" ? "not_sure" : interest;
+}
+
 export async function submitLead(lead: Lead): Promise<SubmitLeadResult> {
-  if (process.env.NODE_ENV !== "production") {
-    console.info("[lead-revive] captured lead", lead);
+  try {
+    const supabase = getSupabaseClient();
+    const { error } = await supabase.from("leads").insert({
+      full_name: lead.fullName,
+      email: lead.email,
+      phone: lead.phone,
+      interest_type: toInterestType(lead.interest),
+      message: lead.message,
+      source: "website",
+    });
+
+    if (error) {
+      if (process.env.NODE_ENV !== "production") {
+        console.error("[lead-revive] supabase insert failed", error);
+      }
+      return {
+        ok: false,
+        error:
+          "Sorry, we couldn't send your details right now. Please try again in a moment.",
+      };
+    }
+
+    return { ok: true };
+  } catch (err) {
+    if (process.env.NODE_ENV !== "production") {
+      console.error("[lead-revive] submitLead threw", err);
+    }
+    return {
+      ok: false,
+      error:
+        "Sorry, we couldn't send your details right now. Please try again in a moment.",
+    };
   }
-  return { ok: true };
 }

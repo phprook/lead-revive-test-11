@@ -1,39 +1,44 @@
-# Build Report — FEATURE_005: Future lead storage preparation
+# Build Report — Connect Lead Form to Supabase
+
+**Date:** 2026-05-17
+**Result:** Build succeeded (`next build`, Next.js 16.2.6)
 
 ## Summary
-Refactored the lead form so submission goes through a single, swappable
-boundary that already speaks the future database contract. No backend,
-database, or third-party service was added.
+Wired the existing lead form to Supabase. Valid submissions now insert
+into `public.leads` using the anon key from `.env.local`. Client-side
+validation and the existing success state are preserved.
 
 ## Changes
-- **Added `src/lib/leads.ts`** — domain module that owns the future lead
-  contract:
-  - `Lead` type with DB-shaped fields (`fullName`, `email`, `phone`,
-    `interest`, `message`, `submittedAt`). Optional contact fields are
-    `string | null`, matching how a SQL row would store them.
-  - `LeadInterest` union + `LEAD_INTEREST_OPTIONS` constant — single
-    source of truth for the dropdown, the type system, and any future
-    `interest` column.
-  - `validateLeadInput` — pure validator returning field errors.
-  - `buildLead` — normalizes raw form input into a clean `Lead` record.
-  - `submitLead(lead)` — the single boundary where a backend integration
-    will be wired in later (API route, Supabase client, CRM webhook).
-    Currently a no-op that logs in development.
-- **Refactored `src/app/components/LeadForm.tsx`** to import from the
-  new lib: validation, the interest options, `buildLead`, and
-  `submitLead`. Added a `submitting` state (button disables and shows
-  "Sending…") and a `submitError` alert path so async failures from a
-  future backend will surface without further refactor.
+- **Installed** `@supabase/supabase-js`.
+- **Added** `src/lib/supabaseClient.ts` — small lazy singleton browser
+  client using `NEXT_PUBLIC_SUPABASE_URL` and
+  `NEXT_PUBLIC_SUPABASE_ANON_KEY`. Service role key is never referenced.
+- **Updated** `src/lib/leads.ts` `submitLead()` to insert into
+  `public.leads` using the existing columns: `full_name`, `email`,
+  `phone`, `interest_type`, `message`, `source`. `source` is set to
+  `"website"`. The domain value `"not-sure"` is mapped to the DB-allowed
+  `"not_sure"` to satisfy the existing check constraint.
+- On Supabase error or thrown exception, returns a clear, non-technical
+  message: *"Sorry, we couldn't send your details right now. Please try
+  again in a moment."* The form's existing `submitError` alert path
+  renders it.
 
-## Done-when check
-- Submission logic organized so a backend can be added later — all
-  persistence flows through `submitLead` in `src/lib/leads.ts`.
-- Future lead fields easy to map to a database — `Lead` type uses flat,
-  primitive fields with explicit nullability and an ISO timestamp.
-- No Supabase credentials or production services added — no new deps,
-  no env vars, no API routes.
-- Code remains simple and understandable — one small lib file plus a
-  minimal form refactor.
+## Preserved
+- `validateLeadInput` and all field-level errors.
+- The existing success state in `LeadForm.tsx` (no UI edits required).
+- No new tables, no auth, no admin dashboard, no secrets committed.
 
-## Verified
-- `npm run build` compiles, type-checks, and prerenders successfully.
+## Build output
+```
+✓ Compiled successfully in 8.5s
+  Finished TypeScript in 6.5s
+✓ Generating static pages (4/4)
+Route (app)
+┌ ○ /
+└ ○ /_not-found
+```
+
+## Notes
+- Next.js warned about a sibling `package-lock.json` at
+  `/home/ubuntu/ai-builds/` — pre-existing, unrelated to this change.
+  Can be silenced with `turbopack.root` if desired.
