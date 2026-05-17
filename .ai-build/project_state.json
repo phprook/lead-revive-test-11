@@ -116,11 +116,15 @@
   "lastDesignChecklistFile": null,
   "lastClaudeReviewFile": null,
   "lastFinalDecisionFile": null,
-  "updatedAt": "2026-05-17T18:48:17.795Z",
+  "updatedAt": "2026-05-17T21:22:16.931Z",
   "localPath": "/home/ubuntu/ai-builds/lead-revive-test-11",
   "lastActiveBuild": {
     "feature": "FEATURE_005",
     "featureName": "Future lead storage preparation",
     "completedAt": "2026-05-17T18:48:17.795Z"
+  },
+  "supabase": {
+    "projectRef": "nkbmykjqnpdfqazzxlft",
+    "connectedAt": "2026-05-17T21:22:16.931Z"
   }
 }
