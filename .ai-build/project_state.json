@@ -116,7 +116,7 @@
   "lastDesignChecklistFile": null,
   "lastClaudeReviewFile": null,
   "lastFinalDecisionFile": null,
-  "updatedAt": "2026-05-17T21:28:31.633Z",
+  "updatedAt": "2026-05-17T21:29:08.840Z",
   "localPath": "/home/ubuntu/ai-builds/lead-revive-test-11",
   "lastActiveBuild": {
     "feature": "FEATURE_005",
@@ -126,5 +126,10 @@
   "supabase": {
     "projectRef": "nkbmykjqnpdfqazzxlft",
     "connectedAt": "2026-05-17T21:28:31.633Z"
+  },
+  "database": {
+    "plannedMigration": "supabase/migrations/20260517212842_create_leads_table.sql",
+    "plannedAt": "2026-05-17T21:28:42.269Z",
+    "lastMigrationAppliedAt": "2026-05-17T21:29:08.840Z"
   }
 }
