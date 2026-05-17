@@ -1,14 +1,13 @@
 # Build Report — Connect Lead Form to Supabase
 
 **Date:** 2026-05-17
-**Result:** Build succeeded (`next build`, Next.js 16.2.6)
+**Result:** Build succeeded (`next build`, Next.js 16.2.6 / Turbopack)
 
 ## Summary
 Verification pass. The lead form was already wired to Supabase in prior
 commits (`Connect lead form to Supabase`, `Apply Supabase leads
-migration`); this run reconfirmed every constraint in the task is
-satisfied and that `npm run build` still passes. No code changes were
-needed.
+migration`). This run reconfirmed every task constraint is satisfied and
+that `npm run build` still passes cleanly. No code changes were needed.
 
 ## Wiring in place
 - `src/lib/supabaseClient.ts` — small lazy singleton browser client using
@@ -31,9 +30,9 @@ needed.
 
 ## Build output
 ```
-✓ Compiled successfully in 8.7s
-  Finished TypeScript in 6.3s
-✓ Generating static pages (4/4) in 231ms
+✓ Compiled successfully in 8.3s
+  Finished TypeScript in 6.0s
+✓ Generating static pages (4/4) in 223ms
 Route (app)
 ┌ ○ /
 └ ○ /_not-found
